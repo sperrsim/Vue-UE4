@@ -23,4 +23,7 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+body{
+  background-image:url("https://i.redd.it/83na5sd3wyd51.jpg");
+}
 </style>
