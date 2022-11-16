@@ -1,34 +1,57 @@
 <template>
   <ul>
     <li v-for="(item, index) in toDoList" :key="index">
-    <input type="checkbox" :id="item.name" :value="item.name" v-model="checkeditems">
-      {{item.name}}
+    <input
+        type="checkbox"
+        :id="item.name"
+        :value="item.name"
+        v-model="checkedItems"
+      />
+      <span :class="{finished: taskDone(item.name)}"> {{ item.name }}</span>
+
+      <span class="delete" @click="deleteItem(index)">X</span>
     </li>
   </ul>
-  {{checkeditems}}
 </template>
 
 <script>
-  import {ref} from 'vue'
+  import { ref } from 'vue';
+  export default {  
+  props: {
+    deleteItem: {
+      type: Function,
+      required: true,
+    },
+    toDoList: {
+      type: Array,
+      require: true,
+    },
+  },
+  setup() {
+    const checkedItems = ref([]);
 
-  export default {
-    props: {
-      toDoList: {
-        type: Array,
-        required: true
+    function taskDone(task) {
+      console.log('task: ' + task);
+      if (checkedItems.value.includes(task)) 
+      {
+        return true;
       }
-    },
+      return false;
+    }
 
-    setup(){
-      const checkeditems = ref([]);
-
-      return{checkeditems};
-    },
-  }
+    return { checkedItems,
+              taskDone };
+    
+  },
+  };
 </script>
 
-<sytel scoped>
+<style scoped>
 ul {
   list-style: none;
+}
+
+.finished {
+  text-decoration: line-through;
 }
 </style>
